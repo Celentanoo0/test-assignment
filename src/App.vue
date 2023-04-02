@@ -1,6 +1,6 @@
 <script setup>
-import HeaderSection from "@/components/HeaderSection.vue";
-import MainSection from "@/components/MainSection.vue";
+import HeaderSection from '@/components/HeaderSection.vue'
+import MainSection from '@/components/MainSection.vue'
 </script>
 
 <template>
@@ -13,18 +13,12 @@ import MainSection from "@/components/MainSection.vue";
 </template>
 
 <style lang="scss" scoped>
-//*, *::before, *::after{
-//  margin: 0;
-//  padding: 0;
-//  box-sizing: border-box;
-//}
-.wrapper{
-  background: #F8F8F8;
+.wrapper {
+  background: #f8f8f8;
 }
 
-.size-controller{
+.size-controller {
   max-width: 1170px;
-  //min-height: 100vh; ???
   margin: 0 auto;
   display: flex;
   flex-direction: column;

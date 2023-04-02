@@ -11,7 +11,7 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
     </div>
     <users-container />
     <div class="users-wrapper__show-more-button show-more-button">
-      <button-component :button-width="'120'">Show more</button-component>
+      <button-component button-name="Show more" button-width="120" />
     </div>
   </section>
 </template>

@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import ButtonComponent from '@/components/ButtonComponent.vue'
 
 const nameField = ref('')
 const emailField = ref('')
@@ -63,7 +64,7 @@ const onPhotoSelected = (event) => {
             id="phone"
             name="phone"
             placeholder="Phone"
-            pattern="[0-9]{10}"
+            pattern="[0-9]{12}"
             v-model="phoneField"
             required
           />
@@ -98,7 +99,11 @@ const onPhotoSelected = (event) => {
         </div>
 
         <div class="form__submit form__item">
-          <input type="submit" class="submit" value="Sign up" :disabled="submitButtonState" />
+          <button-component
+            button-type="submit"
+            button-name="Sign up"
+            :disabled="submitButtonState"
+          />
         </div>
       </form>
     </div>
@@ -197,27 +202,27 @@ const onPhotoSelected = (event) => {
   }
 }
 
-.submit {
-  cursor: pointer;
-  display: inline-block;
-  line-height: 26px;
-  background: #f4e041;
-  border-radius: 80px;
-  border: none;
-  padding: 4px 0;
-  width: 100px;
-  text-align: center;
-  font-size: 16px;
-  color: rgba(0, 0, 0, 0.87);
-  transition: all 0.2s;
-}
-.submit:hover {
-  background: #ffe304;
-}
-.submit:disabled {
-  background: #b4b4b4;
-  color: white;
-}
+//.submit {
+//  cursor: pointer;
+//  display: inline-block;
+//  line-height: 26px;
+//  background: #f4e041;
+//  border-radius: 80px;
+//  border: none;
+//  padding: 4px 0;
+//  width: 100px;
+//  text-align: center;
+//  font-size: 16px;
+//  color: rgba(0, 0, 0, 0.87);
+//  transition: all 0.2s;
+//}
+//.submit:hover {
+//  background: #ffe304;
+//}
+//.submit:disabled {
+//  background: #b4b4b4;
+//  color: white;
+//}
 
 .radio-container input[type='radio'] {
   display: none;

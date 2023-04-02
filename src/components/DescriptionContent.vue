@@ -12,7 +12,7 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
         accessibility in mind. They should also be excited to learn, as the world of Front-End
         Development keeps evolving.
       </p>
-      <button-component>Sign up</button-component>
+      <button-component button-name="Sign up" />
     </section>
   </div>
 </template>

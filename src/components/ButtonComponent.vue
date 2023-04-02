@@ -2,19 +2,27 @@
 import { toRefs } from 'vue'
 
 const props = defineProps({
+  buttonName: {
+    required: true,
+    type: String,
+    default: 'Button name'
+  },
   buttonWidth: {
     required: false,
     type: String
+  },
+  buttonType: {
+    required: false,
+    type: String,
+    default: 'button',
   }
 })
 
-const { buttonWidth } = toRefs(props)
+const { buttonType, buttonName, buttonWidth } = toRefs(props)
 </script>
 
 <template>
-  <div class="button" :style="{ width: buttonWidth + 'px' }">
-    <slot>ButtonName</slot>
-  </div>
+  <input :type="buttonType" :value="buttonName" class="button" :style="{ width: buttonWidth + 'px' }">
 </template>
 
 <style lang="scss" scoped>
@@ -29,6 +37,7 @@ const { buttonWidth } = toRefs(props)
   font-size: 16px;
   color: rgba(0, 0, 0, 0.87);
   transition: all 0.2s;
+  border: 0;
 }
 .button:hover {
   background: #ffe304;

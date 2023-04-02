@@ -1,19 +1,18 @@
 <script setup>
-
-import ButtonComponent from "@/components/ButtonComponent.vue";
+import ButtonComponent from '@/components/ButtonComponent.vue'
 </script>
 
 <template>
   <header class="header">
     <div class="size-controller">
       <div class="logo">
-        <img src="src/assets/logo.svg" alt="Logo">
+        <img src="src/assets/logo.svg" alt="Logo" />
       </div>
       <div class="buttons">
         <nav>
           <ul>
-            <li><button-component class="buttons__button button">Users</button-component></li>
-            <li><button-component class="buttons__button button">Sign up</button-component></li>
+            <button-component class="buttons__button button" button-name="Users" />
+            <button-component class="buttons__button button" button-name="Sign up" />
           </ul>
         </nav>
       </div>
@@ -22,22 +21,12 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
 </template>
 
 <style lang="scss" scoped>
-ul, ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  li {
-    margin: 0;
-    padding: 0;
-  }
-}
-
-.header{
+.header {
   background: white;
   height: 60px;
 }
 
-.size-controller{
+.size-controller {
   height: 100%;
   max-width: 1170px;
   margin: 0 auto;
@@ -46,16 +35,16 @@ ul, ol {
   align-items: center;
 }
 
-.logo{
+.logo {
   padding: 0 0 0 16px;
 }
 
-.buttons{
+.buttons {
   padding: 0 16px 0 0;
-  &__button:last-child{
+  &__button:last-child {
     margin: 0 0 0 10px;
   }
-  & ul{
+  & ul {
     display: flex;
   }
 }
