@@ -5,15 +5,27 @@ const nameField = ref('')
 const emailField = ref('')
 const phoneField = ref('')
 const selectedOption = ref(null)
+const uploadedPhoto = ref(null)
 
 const submitButtonState = computed(() => {
   return (
     nameField.value === '' ||
     emailField.value === '' ||
     phoneField.value === '' ||
-    selectedOption.value === null
+    selectedOption.value === null ||
+    uploadedPhoto.value === null
   )
 })
+
+const uploadedPhotoName = computed(() => {
+  return uploadedPhoto.value ? uploadedPhoto.value.name : 'Upload your photo'
+})
+
+const onPhotoSelected = (event) => {
+  if (event && event.target && event.target.files && event.target.files[0]) {
+    uploadedPhoto.value = event.target.files[0]
+  }
+}
 </script>
 
 <template>
@@ -78,10 +90,10 @@ const submitButtonState = computed(() => {
         </div>
 
         <div class="form__image form__item">
-          <input type="file" id="image" name="image" />
+          <input type="file" id="image" name="image" @change="onPhotoSelected" />
           <div class="form__upload-button upload-button">
             <label for="image" class="upload-button__left">Upload</label>
-            <label for="image" class="upload-button__right">Upload your photo</label>
+            <label for="image" class="upload-button__right">{{ uploadedPhotoName }}</label>
           </div>
         </div>
 
@@ -94,30 +106,6 @@ const submitButtonState = computed(() => {
 </template>
 
 <style lang="scss" scoped>
-.radio-container input[type='radio'] {
-  display: none;
-}
-
-.radio-container input[type='radio'] + label:before {
-  content: '';
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-right: 12px;
-  border-radius: 50%;
-  border: 1px solid #d0cfcf;
-  vertical-align: middle;
-  box-sizing: border-box;
-  transition: all 0.2s ease-in-out;
-}
-
-.radio-container input[type='radio']:checked + label:before {
-  background: #00bdd3;
-  border: 1px solid #00bdd3;
-  padding: 0;
-  box-shadow: inset 0 0 0 4px #fff;
-}
-
 .form-heading {
   margin: 0 16px 50px;
   color: rgba(0, 0, 0, 0.87);
@@ -165,6 +153,12 @@ const submitButtonState = computed(() => {
   }
   &__position-item label {
     margin: 0 0 0 12px;
+  }
+  &__position-item {
+    margin: 0 0 7px 0;
+  }
+  &__position-item:last-child {
+    margin: 0;
   }
 
   &__item {
@@ -223,5 +217,31 @@ const submitButtonState = computed(() => {
 .submit:disabled {
   background: #b4b4b4;
   color: white;
+}
+
+.radio-container input[type='radio'] {
+  display: none;
+}
+.radio-container {
+  display: flex;
+  align-items: center;
+}
+.radio-container input[type='radio'] + label:before {
+  content: '';
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 12px;
+  border-radius: 50%;
+  border: 1px solid #d0cfcf;
+  vertical-align: middle;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+.radio-container input[type='radio']:checked + label:before {
+  background: #00bdd3;
+  border: 1px solid #00bdd3;
+  padding: 0;
+  box-shadow: inset 0 0 0 4px #fff;
 }
 </style>
