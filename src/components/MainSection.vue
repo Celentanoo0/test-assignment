@@ -1,7 +1,7 @@
 <script setup>
-import DescriptionContent from "@/components/DescriptionContent.vue";
-import UsersSection from "@/components/UsersSection.vue";
-import RegistrationForm from "@/components/RegistrationForm.vue";
+import DescriptionContent from '@/components/DescriptionContent.vue'
+import UsersSection from '@/components/UsersSection.vue'
+import RegistrationForm from '@/components/RegistrationForm.vue'
 </script>
 
 <template>
@@ -13,7 +13,7 @@ import RegistrationForm from "@/components/RegistrationForm.vue";
 </template>
 
 <style lang="scss" scoped>
-.main{
+.main {
   display: flex;
   flex-direction: column;
 }

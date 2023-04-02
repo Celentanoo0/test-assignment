@@ -1,5 +1,5 @@
 <script setup>
-import ButtonComponent from "@/components/ButtonComponent.vue";
+import ButtonComponent from '@/components/ButtonComponent.vue'
 </script>
 
 <template>
@@ -18,13 +18,15 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
 </template>
 
 <style lang="scss" scoped>
-.component{
+.component {
   height: 500px;
-  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('src/assets/pexels-alexandr-podvalny-1227513.jpeg') center;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url('src/assets/pexels-alexandr-podvalny-1227513.jpeg') center;
   background-size: cover;
   position: relative;
 }
-.description{
+
+.description {
   height: 100%;
   max-width: 380px;
   margin: 0 auto;
@@ -35,16 +37,14 @@ import ButtonComponent from "@/components/ButtonComponent.vue";
   align-items: center;
   justify-content: center;
 }
-.description h1{
-  margin: 0;
+.description h1 {
   padding: 0;
   font-size: 40px;
   line-height: 40px;
   text-align: center;
   margin: 0 0 21px 0;
 }
-.description p{
-  margin: 0;
+.description p {
   padding: 0;
   text-align: center;
   font-size: 16px;

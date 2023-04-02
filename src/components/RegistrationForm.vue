@@ -35,7 +35,7 @@ const onPhotoSelected = (event) => {
       <h1>Working with POST request</h1>
     </div>
     <div class="form-wrapper__form form">
-      <form action="submit-form.php" method="post" enctype="multipart/form-data">
+      <form action="#" method="post" enctype="multipart/form-data">
         <div class="form__name form__item">
           <input
             type="text"
@@ -156,6 +156,9 @@ const onPhotoSelected = (event) => {
     line-height: 26px;
     color: rgba(0, 0, 0, 0.87);
   }
+  &__position-description{
+    margin: 0 0 11px 0;
+  }
   &__position-item label {
     margin: 0 0 0 12px;
   }
@@ -201,28 +204,6 @@ const onPhotoSelected = (event) => {
     text-align: left;
   }
 }
-
-//.submit {
-//  cursor: pointer;
-//  display: inline-block;
-//  line-height: 26px;
-//  background: #f4e041;
-//  border-radius: 80px;
-//  border: none;
-//  padding: 4px 0;
-//  width: 100px;
-//  text-align: center;
-//  font-size: 16px;
-//  color: rgba(0, 0, 0, 0.87);
-//  transition: all 0.2s;
-//}
-//.submit:hover {
-//  background: #ffe304;
-//}
-//.submit:disabled {
-//  background: #b4b4b4;
-//  color: white;
-//}
 
 .radio-container input[type='radio'] {
   display: none;

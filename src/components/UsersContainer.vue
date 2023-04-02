@@ -1,13 +1,11 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <div class="users-wrapper__users users">
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -22,7 +20,7 @@
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -37,7 +35,7 @@
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -52,7 +50,7 @@
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -67,7 +65,7 @@
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -82,7 +80,7 @@
     <div class="users__user user">
       <div class="user__wrapper">
         <div class="user__profile-photo">
-          <img src="src/assets/photo-cover.svg" alt="profile-photo">
+          <img src="src/assets/photo-cover.svg" alt="profile-photo" />
         </div>
         <div class="user__name">
           <p>Ilya</p>
@@ -98,40 +96,44 @@
 </template>
 
 <style lang="scss" scoped>
-
-
-.users{
+.users {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
-.user{
+
+.user {
   background: white;
   border-radius: 10px;
   flex: 1 1 auto;
   margin: 0 16px 16px;
   color: rgba(0, 0, 0, 0.87);
   text-align: center;
-  &__wrapper{
+
+  &__wrapper {
     overflow: hidden;
     margin: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  &__profile-photo{
+
+  &__profile-photo {
     width: 70px;
     margin: 0 0 20px 0;
   }
-  &__name{
+
+  &__name {
     margin: 0 0 20px 0;
   }
-  &__description p{
+
+  &__description p {
     font-size: 16px;
     line-height: 26px;
   }
-}
-.user:last-child{
-  margin: 0 16px;
+
+  &:last-child {
+    margin: 0 16px;
+  }
 }
 </style>
