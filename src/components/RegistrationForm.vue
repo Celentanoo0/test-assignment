@@ -1,12 +1,22 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import { getPositions } from '@/api'
 
 const nameField = ref('')
 const emailField = ref('')
 const phoneField = ref('')
 const selectedOption = ref(null)
 const uploadedPhoto = ref(null)
+const positions = reactive([])
+
+onMounted(() => {
+  getPositions().then((data) => {
+    for (const elem of data) {
+      positions.push(elem)
+    }
+  })
+})
 
 const submitButtonState = computed(() => {
   return (
@@ -17,6 +27,10 @@ const submitButtonState = computed(() => {
     uploadedPhoto.value === null
   )
 })
+
+const positionNameWithoutSpaces = (posName) => {
+  return posName.split(' ').join('_')
+}
 
 const uploadedPhotoName = computed(() => {
   return uploadedPhoto.value ? uploadedPhoto.value.name : 'Upload your photo'
@@ -72,21 +86,18 @@ const onPhotoSelected = (event) => {
 
         <div class="form__position form__item">
           <div class="form__position-description">Select your position:</div>
-          <div class="form__position-item radio-container">
-            <input type="radio" id="fontend" name="position" v-model="selectedOption" />
-            <label for="fontend">Frontend developer</label>
-          </div>
-          <div class="form__position-item radio-container">
-            <input type="radio" id="backend" name="position" v-model="selectedOption" />
-            <label for="backend">Backend developer</label>
-          </div>
-          <div class="form__position-item radio-container">
-            <input type="radio" id="ui" name="position" v-model="selectedOption" />
-            <label for="ui">Designer</label>
-          </div>
-          <div class="form__position-item radio-container">
-            <input type="radio" id="qa" name="position" v-model="selectedOption" />
-            <label for="qa">QA</label>
+          <div
+            class="form__position-item radio-container"
+            v-for="position in positions"
+            :key="position.id"
+          >
+            <input
+              type="radio"
+              :id="positionNameWithoutSpaces(position.name)"
+              name="position"
+              v-model="selectedOption"
+            />
+            <label :for="positionNameWithoutSpaces(position.name)">{{ position.name }}</label>
           </div>
         </div>
 
@@ -157,7 +168,7 @@ const onPhotoSelected = (event) => {
     line-height: 26px;
     color: rgba(0, 0, 0, 0.87);
   }
-  &__position-description{
+  &__position-description {
     margin: 0 0 11px 0;
   }
   &__position-item label {

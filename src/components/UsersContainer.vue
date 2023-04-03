@@ -1,17 +1,30 @@
 <script setup>
-import { onMounted, reactive } from 'vue'
+import ButtonComponent from '@/components/ButtonComponent.vue'
+import { onMounted, reactive, ref } from 'vue'
 import { getUsers } from '@/api'
 
 onMounted(() => {
-  getUsers().then((data) => {
-    for (const elem of data) {
-      users.push(elem)
-    }
-  })
-  console.log(users)
+  getUsers().then(pushToArray)
 })
 
+const USERS_PER_REQUEST = 6
 const users = reactive([])
+const usersAreExist = ref(true)
+
+const pushToArray = (data) => {
+  for (const elem of data) {
+    users.push(elem)
+  }
+  users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
+
+  if (data.length < USERS_PER_REQUEST) {
+    usersAreExist.value = false
+  }
+}
+
+const showMoreUsers = async () => {
+  getUsers().then(pushToArray)
+}
 </script>
 
 <template>
@@ -22,19 +35,31 @@ const users = reactive([])
           <img :src="user.photo" alt="profile-photo" />
         </div>
         <div class="user__name">
-          <p>{{user.name}}</p>
+          <p>{{ user.name }}</p>
         </div>
         <div class="user__description">
-          <p>{{user.position}}</p>
-          <p>{{user.email}}</p>
-          <p>{{user.phone}}</p>
+          <p>{{ user.position }}</p>
+          <p>{{ user.email }}</p>
+          <p>{{ user.phone }}</p>
         </div>
       </div>
     </div>
   </div>
+  <div class="show-more-button">
+    <button-component
+      @click="showMoreUsers"
+      button-name="Show more"
+      button-width="120"
+      v-if="usersAreExist"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>
+.show-more-button {
+  margin: 50px 0 140px;
+}
+
 .users {
   display: flex;
   flex-wrap: wrap;
@@ -61,6 +86,9 @@ const users = reactive([])
 
   &__profile-photo {
     width: 70px;
+    img {
+      border-radius: 50%;
+    }
   }
 
   &__description p {

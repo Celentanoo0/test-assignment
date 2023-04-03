@@ -5,6 +5,7 @@
 // 3.error in text input when incorrect data
 // 4.fix input radio
 // 5.problems with text wrap
+// 6.wait screen when users aren't loaded
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>
