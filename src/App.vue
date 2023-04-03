@@ -1,4 +1,10 @@
 <script setup>
+//todo:
+// 1.email when hover to it
+// 2.error in upload input when file isn't a photo
+// 3.error in text input when incorrect data
+// 4.fix input radio
+// 5.problems with text wrap
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>

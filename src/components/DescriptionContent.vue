@@ -51,4 +51,10 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
   line-height: 26px;
   margin: 0 0 32px 0;
 }
+
+@media (min-width: 1024px) {
+  .component{
+    height: 650px;
+  }
+}
 </style>

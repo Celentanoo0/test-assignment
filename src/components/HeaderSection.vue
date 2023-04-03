@@ -36,16 +36,32 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 }
 
 .logo {
-  padding: 0 0 0 16px;
+  margin: 0 0 0 16px;
 }
 
 .buttons {
-  padding: 0 16px 0 0;
+  margin: 0 16px 0 0;
   &__button:last-child {
     margin: 0 0 0 10px;
   }
   & ul {
     display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .logo, .buttons{
+    margin: 0 32px;
+  }
+}
+@media (min-width: 1024px) {
+  .logo, .buttons{
+    margin: 0 60px;
+  }
+}
+@media (min-width: 2560px) {
+  .logo, .buttons{
+    margin: 0;
   }
 }
 </style>
