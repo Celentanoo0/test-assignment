@@ -9,6 +9,7 @@ const phoneField = ref('')
 const selectedOption = ref(null)
 const uploadedPhoto = ref(null)
 const positions = reactive([])
+const valError = false;
 
 onMounted(() => {
   getPositions().then((data) => {
@@ -59,6 +60,7 @@ const onPhotoSelected = (event) => {
             v-model="nameField"
             required
           />
+          <p class="form__validation-fail-text" v-if="valError">Error text</p>
         </div>
 
         <div class="form__email form__item">
@@ -70,6 +72,7 @@ const onPhotoSelected = (event) => {
             v-model="emailField"
             required
           />
+          <p class="form__validation-fail-text" v-if="valError">Error text</p>
         </div>
 
         <div class="form__phone form__item">
@@ -78,10 +81,12 @@ const onPhotoSelected = (event) => {
             id="phone"
             name="phone"
             placeholder="Phone"
-            pattern="[0-9]{12}"
+            pattern="\+380\d{9}"
             v-model="phoneField"
             required
           />
+          <p class="form__phone-placeholder" v-if="valError === false">+38 (XXX) XXX - XX - XX</p>
+          <p class="form__validation-fail-text" v-if="valError">Error text</p>
         </div>
 
         <div class="form__position form__item">
@@ -105,6 +110,7 @@ const onPhotoSelected = (event) => {
           <input type="file" id="image" name="image" @change="onPhotoSelected" />
           <div class="form__upload-button upload-button">
             <label for="image" class="upload-button__left">Upload</label>
+            <p v-if="valError" class="upload-button__validation-error">Error text</p>
             <label for="image" class="upload-button__right">{{ uploadedPhotoName }}</label>
           </div>
         </div>
@@ -122,6 +128,7 @@ const onPhotoSelected = (event) => {
 </template>
 
 <style lang="scss" scoped>
+
 .form-heading {
   margin: 0 16px 50px;
   color: rgba(0, 0, 0, 0.87);
@@ -150,12 +157,27 @@ const onPhotoSelected = (event) => {
     background: #f8f8f8;
   }
 
+  &__name.validation-fail,
+  &__email.validation-fail,
+  &__phone.validation-fail {
+    border: 2px solid rgba(203, 61, 64, 1);
+    border-radius: 4px;
+  }
+
+  &__validation-fail-text{
+    position: absolute;
+    top: 55px;
+    left: 18px;
+    font-size: 12px;
+    line-height: 14px;
+    color: #CB3D40;
+  }
+
   &__phone {
     position: relative;
   }
-  &__phone:after {
+  &__phone-placeholder {
     position: absolute;
-    content: '+38 (XXX) XXX - XX - XX';
     font-size: 12px;
     line-height: 14px;
     color: #7e7e7e;
@@ -183,6 +205,7 @@ const onPhotoSelected = (event) => {
 
   &__item {
     margin: 0 0 50px;
+    position: relative;
   }
   &__item:last-child {
     margin: 0 0 100px;
@@ -201,6 +224,7 @@ const onPhotoSelected = (event) => {
   font-size: 16px;
   line-height: 26px;
   display: flex;
+  position: relative;
   &__left {
     border: 1px solid rgba(0, 0, 0, 0.87);
     border-radius: 4px 0px 0px 4px;
@@ -214,6 +238,23 @@ const onPhotoSelected = (event) => {
     color: rgba(126, 126, 126, 1);
     flex: 1 1 auto;
     text-align: left;
+  }
+  &__validation-error{
+    color: rgba(203, 61, 64, 1);
+    font-size: 12px;
+    line-height: 14px;
+    position: absolute;
+    top: 63px;
+    left: 18px;
+  }
+}
+.upload-button{
+  &__left.error {
+    border: 2px solid rgba(203, 61, 64, 1);
+    border-right: 0px;
+  }
+  &__right.error {
+    border: 2px solid rgba(203, 61, 64, 1);
   }
 }
 

@@ -15,7 +15,7 @@ const pushToArray = (data) => {
   for (const elem of data) {
     users.push(elem)
   }
-  users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
+  users.sort((a, b) => b.registration_timestamp - a.registration_timestamp)
 
   if (data.length < USERS_PER_REQUEST) {
     usersAreExist.value = false
