@@ -136,6 +136,7 @@ const onPhotoSelected = (event) => {
     border: 1px solid #d0cfcf;
     border-radius: 4px;
     color: #7e7e7e;
+    background: #f8f8f8;
   }
 
   &__phone {

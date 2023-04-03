@@ -127,9 +127,16 @@
     margin: 0 0 20px 0;
   }
 
+  &__description{
+  }
   &__description p {
     font-size: 16px;
     line-height: 26px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width:250px;
+    margin: 0 auto;
   }
 
   &:last-child {
