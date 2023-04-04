@@ -1,7 +1,7 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import {computed, onMounted, reactive, ref } from 'vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import { getPositions } from '@/api'
+import {getPositions, registrationRequest} from '@/api'
 
 const nameField = ref('')
 const emailField = ref('')
@@ -100,7 +100,7 @@ const onPhotoSelected = (event) => {
               type="radio"
               :id="positionNameWithoutSpaces(position.name)"
               name="position"
-              v-model="selectedOption"
+              @click = 'selectedOption = position.id'
             />
             <label :for="positionNameWithoutSpaces(position.name)">{{ position.name }}</label>
           </div>
@@ -120,6 +120,7 @@ const onPhotoSelected = (event) => {
             button-type="submit"
             button-name="Sign up"
             :disabled="submitButtonState"
+            @click.prevent = 'registrationRequest(nameField, emailField, phoneField, selectedOption, uploadedPhoto)'
           />
         </div>
       </form>
