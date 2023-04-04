@@ -1,7 +1,11 @@
 <script setup>
-import { computed, onMounted, reactive, ref, toRefs } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { getPositions, registrationRequest } from '@/api'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+
+const emit = defineEmits({
+  'registration-successful': null
+})
 
 const nameField = ref('')
 const emailField = ref('')
@@ -44,6 +48,7 @@ const handleRegistration = async () => {
       fieldsToValidate[keyName].validationError = false
       fieldsToValidate[keyName].errorText = ''
     }
+    emit('registration-successful')
     return
   }
 
@@ -161,7 +166,7 @@ const onPhotoSelected = (event) => {
         </div>
 
         <div class="form__image form__item">
-          <input type="file" id="image" name="image" @change="onPhotoSelected" />
+          <input type="file" accept="image/*" id="image" name="image" @change="onPhotoSelected" />
           <div class="form__upload-button upload-button">
             <label
               for="image"

@@ -9,17 +9,14 @@ export const getUsers = async (usersAmount) => {
     const data = await f.json()
     const users = data.users
 
+    allUsers.length = 0
     for (const elem of users) {
       allUsers.push(elem)
     }
 
-    if (data.total_users - allUsers.length > 0) {
-      await getUsers(100)
-    }
-
     return allUsers
   } catch (error) {
-    console.error(error.message)
+    console.error(error)
   }
 }
 
@@ -29,7 +26,7 @@ export const getPositions = async () => {
     const data = await f.json()
     return data.positions
   } catch (error) {
-    console.error(error.message)
+    console.error(error)
   }
 }
 
@@ -39,7 +36,7 @@ const getTokenForRegistration = async () => {
     const data = await f.json()
     apiToken = data.token
   } catch (error) {
-    console.error(error.message)
+    console.error(error)
   }
 }
 
@@ -65,6 +62,6 @@ export const registrationRequest = async (name, email, phone, position_id, photo
     const data = response.json()
     return data
   } catch (error) {
-    console.error(error.message)
+    console.error(error)
   }
 }

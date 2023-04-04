@@ -1,11 +1,15 @@
 <script setup>
 //todo:
+// 2.error in upload input when file isn't a photo [DONE]
+// 3.error in text input when incorrect data [DONE]
+// 4.fix input radio [DONE]
+// 5.problems with text wrap [DONE]
 // 1.email when hover to it
-// 2.error in upload input when file isn't a photo
-// 3.error in text input when incorrect data
-// 4.fix input radio
-// 5.problems with text wrap
 // 6.wait screen when users aren't loaded
+// 7.fix api getUsers, it doesnt work correctly (can display only last 100 users)
+// 8. implement User with this phone or email already exist validation
+// 9. refactor html,css, and js, if needed
+// 10. pixel-perfect????
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>

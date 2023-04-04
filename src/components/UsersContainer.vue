@@ -1,31 +1,54 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import {computed, onMounted, reactive, ref} from 'vue'
+import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { getUsers } from '@/api'
 
+const props = defineProps({
+  updateUsers: {
+    required: false,
+    type: Boolean
+  }
+})
+const emit = defineEmits({
+  'users-updated': null
+})
+
+const { updateUsers } = toRefs(props)
+
 const users = reactive([])
-const maxUsersOnPage = ref(6);
-const NEW_USERS_QUANTITY = 6;
+const maxUsersOnPage = ref(6)
+const NEW_USERS_QUANTITY = 6
 const addNewUsersIsPossible = ref(true)
 
 onMounted(() => {
-  getUsers(100).then((data) => {
-    for (const elem of data) {
-      users.push(elem)
-    }
-  })
-
-  users.sort((a,b) => a.registration_timestamp - b.registration_timestamp)
+  getUsers(100).then(updateUsersArray)
+  // users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
 })
+
+watch(updateUsers, () => {
+  if (!updateUsers.value) {
+    return
+  }
+  users.splice(0)
+  maxUsersOnPage.value = 6
+  getUsers(100).then(updateUsersArray)
+  emit('users-updated')
+})
+
+const updateUsersArray = (data) => {
+  for (const elem of data) {
+    users.push(elem)
+  }
+}
 
 const paginatedUsers = computed(() => {
   return users.slice(0, maxUsersOnPage.value)
 })
 
 const addUsersOnPage = () => {
-  maxUsersOnPage.value += NEW_USERS_QUANTITY;
-  if(users.length <= maxUsersOnPage.value){
-    addNewUsersIsPossible.value = false;
+  maxUsersOnPage.value += NEW_USERS_QUANTITY
+  if (users.length <= maxUsersOnPage.value) {
+    addNewUsersIsPossible.value = false
   }
 }
 </script>

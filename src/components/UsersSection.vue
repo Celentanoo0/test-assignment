@@ -1,5 +1,16 @@
 <script setup>
 import UsersContainer from '@/components/UsersContainer.vue'
+import { toRefs } from 'vue'
+const props = defineProps({
+  updateUsers: {
+    required: false,
+    type: Boolean
+  }
+})
+const emit = defineEmits({
+  'users-updated': null
+})
+const { updateUsers } = toRefs(props)
 </script>
 
 <template>
@@ -7,7 +18,7 @@ import UsersContainer from '@/components/UsersContainer.vue'
     <div class="users-wrapper__users-heading users-heading">
       <h1>Working with GET request</h1>
     </div>
-    <users-container />
+    <users-container :updateUsers="updateUsers" @users-updated="emit('users-updated')" />
   </section>
 </template>
 

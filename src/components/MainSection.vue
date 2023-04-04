@@ -2,13 +2,15 @@
 import DescriptionContent from '@/components/DescriptionContent.vue'
 import UsersSection from '@/components/UsersSection.vue'
 import RegistrationForm from '@/components/RegistrationForm.vue'
+import { ref } from 'vue'
+const updateUsers = ref(false)
 </script>
 
 <template>
   <main class="main">
     <description-content />
-    <users-section />
-    <registration-form />
+    <users-section :updateUsers="updateUsers" @users-updated="updateUsers = false" />
+    <registration-form @registration-successful="updateUsers = true" />
   </main>
 </template>
 
