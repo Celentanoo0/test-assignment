@@ -91,6 +91,13 @@ const showMoreUsers = async () => {
     }
   }
 
+  &__name p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 250px;
+  }
+
   &__description p {
     font-size: 16px;
     line-height: 26px;
