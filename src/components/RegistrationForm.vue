@@ -1,16 +1,59 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
-import ButtonComponent from '@/components/ButtonComponent.vue'
+import { computed, onMounted, reactive, ref, toRefs } from 'vue'
 import { getPositions, registrationRequest } from '@/api'
+import ButtonComponent from '@/components/ButtonComponent.vue'
 
 const nameField = ref('')
 const emailField = ref('')
 const phoneField = ref('')
 const selectedOption = ref(null)
 const uploadedPhoto = ref(null)
-const positions = reactive([])
-const valError = false
 const registrationSuccessful = ref(false)
+const positions = reactive([])
+const fieldsToValidate = reactive({
+  name: {
+    validationError: false,
+    errorText: ''
+  },
+  email: {
+    validationError: false,
+    errorText: ''
+  },
+  phone: {
+    validationError: false,
+    errorText: ''
+  },
+  photo: {
+    validationError: false,
+    errorText: ''
+  }
+})
+
+const handleRegistration = async () => {
+  const response = await registrationRequest(
+    nameField.value,
+    emailField.value,
+    phoneField.value,
+    selectedOption.value,
+    uploadedPhoto.value
+  )
+
+  if (response.success) {
+    registrationSuccessful.value = true
+    for (const [keyName, value] of Object.entries(fieldsToValidate)) {
+      fieldsToValidate[keyName].validationError = false
+      fieldsToValidate[keyName].errorText = ''
+    }
+    return
+  }
+
+  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
+    if (response.fails && Object.prototype.hasOwnProperty.call(response.fails, keyName)) {
+      fieldsToValidate[keyName].validationError = true
+      fieldsToValidate[keyName].errorText = response.fails[keyName][0]
+    }
+  }
+}
 
 onMounted(() => {
   getPositions().then((data) => {
@@ -43,21 +86,6 @@ const onPhotoSelected = (event) => {
     uploadedPhoto.value = event.target.files[0]
   }
 }
-
-const handleRegistration = async () => {
-  const response = await registrationRequest(
-    nameField.value,
-    emailField.value,
-    phoneField.value,
-    selectedOption.value,
-    uploadedPhoto.value
-  )
-  console.log(response)
-
-  if(response.success){
-    registrationSuccessful.value = true
-  }
-}
 </script>
 
 <template>
@@ -66,34 +94,39 @@ const handleRegistration = async () => {
       <h1>User successfully registered</h1>
     </div>
     <div class="reg-successful__image">
-      <img src="src/assets/success-image.svg" alt="reg">
+      <img src="src/assets/success-image.svg" alt="reg" />
     </div>
   </div>
-  <section class="form-wrapper" v-if="registrationSuccessful === false">
-
+  <section class="form-wrapper" v-if="!registrationSuccessful">
     <div class="form-wrapper__form-heading form-heading">
       <h1>Working with POST request</h1>
     </div>
     <div class="form-wrapper__form form">
       <form action="#" method="post" enctype="multipart/form-data">
-        <div class="form__name form__item">
+        <div
+          class="form__name form__item"
+          :class="{ 'validation-fail': fieldsToValidate.name.validationError }"
+        >
           <input type="text" id="name" name="name" placeholder="Your name" v-model="nameField" />
-          <p class="form__validation-fail-text" v-if="valError">Error text</p>
+          <p class="form__validation-fail-text" v-if="fieldsToValidate.name.validationError">
+            {{ fieldsToValidate.name.errorText }}
+          </p>
         </div>
 
-        <div class="form__email form__item">
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="Email"
-            v-model="emailField"
-            required
-          />
-          <p class="form__validation-fail-text" v-if="valError">Error text</p>
+        <div
+          class="form__email form__item"
+          :class="{ 'validation-fail': fieldsToValidate.email.validationError }"
+        >
+          <input type="email" id="email" name="email" placeholder="Email" v-model="emailField" />
+          <p class="form__validation-fail-text" v-if="fieldsToValidate.email.validationError">
+            {{ fieldsToValidate.email.errorText }}
+          </p>
         </div>
 
-        <div class="form__phone form__item">
+        <div
+          class="form__phone form__item"
+          :class="{ 'validation-fail': fieldsToValidate.phone.validationError }"
+        >
           <input
             type="tel"
             id="phone"
@@ -101,10 +134,13 @@ const handleRegistration = async () => {
             placeholder="Phone"
             pattern="\+380\d{9}"
             v-model="phoneField"
-            required
           />
-          <p class="form__phone-placeholder" v-if="valError === false">+38 (XXX) XXX - XX - XX</p>
-          <p class="form__validation-fail-text" v-if="valError">Error text</p>
+          <p class="form__phone-placeholder" v-if="!fieldsToValidate.phone.validationError">
+            +38 (XXX) XXX - XX - XX
+          </p>
+          <p class="form__validation-fail-text" v-if="fieldsToValidate.phone.validationError">
+            {{ fieldsToValidate.phone.errorText }}
+          </p>
         </div>
 
         <div class="form__position form__item">
@@ -127,9 +163,24 @@ const handleRegistration = async () => {
         <div class="form__image form__item">
           <input type="file" id="image" name="image" @change="onPhotoSelected" />
           <div class="form__upload-button upload-button">
-            <label for="image" class="upload-button__left">Upload</label>
-            <p v-if="valError" class="upload-button__validation-error">Error text</p>
-            <label for="image" class="upload-button__right">{{ uploadedPhotoName }}</label>
+            <label
+              for="image"
+              class="upload-button__left"
+              :class="{ error: fieldsToValidate.photo.validationError }"
+              >Upload</label
+            >
+            <p
+              v-if="fieldsToValidate.photo.validationError"
+              class="upload-button__validation-error"
+            >
+              {{ fieldsToValidate.photo.errorText }}
+            </p>
+            <label
+              for="image"
+              class="upload-button__right"
+              :class="{ error: fieldsToValidate.photo.validationError }"
+              >{{ uploadedPhotoName }}</label
+            >
           </div>
         </div>
 
@@ -147,17 +198,18 @@ const handleRegistration = async () => {
 </template>
 
 <style lang="scss" scoped>
-.reg-successful{
+.reg-successful {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 50px;
   margin: 0 0 100px 0;
-  &__text{
+  &__text {
     font-size: 40px;
     line-height: 40px;
     color: rgba(0, 0, 0, 0.87);
+    text-align: center;
   }
 }
 
