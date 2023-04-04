@@ -52,5 +52,5 @@ export const registrationRequest = async (name, email, phone, position_id, photo
   })
 
   const data = response.json()
-  console.log(data)
+  return data;
 }

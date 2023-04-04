@@ -1,7 +1,7 @@
 <script setup>
-import {computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import {getPositions, registrationRequest} from '@/api'
+import { getPositions, registrationRequest } from '@/api'
 
 const nameField = ref('')
 const emailField = ref('')
@@ -9,7 +9,8 @@ const phoneField = ref('')
 const selectedOption = ref(null)
 const uploadedPhoto = ref(null)
 const positions = reactive([])
-const valError = false;
+const valError = false
+const registrationSuccessful = ref(false)
 
 onMounted(() => {
   getPositions().then((data) => {
@@ -42,24 +43,41 @@ const onPhotoSelected = (event) => {
     uploadedPhoto.value = event.target.files[0]
   }
 }
+
+const handleRegistration = async () => {
+  const response = await registrationRequest(
+    nameField.value,
+    emailField.value,
+    phoneField.value,
+    selectedOption.value,
+    uploadedPhoto.value
+  )
+  console.log(response)
+
+  if(response.success){
+    registrationSuccessful.value = true
+  }
+}
 </script>
 
 <template>
-  <section class="form-wrapper">
+  <div class="form-wrapper__reg-successful reg-successful" v-if="registrationSuccessful">
+    <div class="reg-successful__text">
+      <h1>User successfully registered</h1>
+    </div>
+    <div class="reg-successful__image">
+      <img src="src/assets/success-image.svg" alt="reg">
+    </div>
+  </div>
+  <section class="form-wrapper" v-if="registrationSuccessful === false">
+
     <div class="form-wrapper__form-heading form-heading">
       <h1>Working with POST request</h1>
     </div>
     <div class="form-wrapper__form form">
       <form action="#" method="post" enctype="multipart/form-data">
         <div class="form__name form__item">
-          <input
-            type="text"
-            id="name"
-            name="name"
-            placeholder="Your name"
-            v-model="nameField"
-            required
-          />
+          <input type="text" id="name" name="name" placeholder="Your name" v-model="nameField" />
           <p class="form__validation-fail-text" v-if="valError">Error text</p>
         </div>
 
@@ -100,7 +118,7 @@ const onPhotoSelected = (event) => {
               type="radio"
               :id="positionNameWithoutSpaces(position.name)"
               name="position"
-              @click = 'selectedOption = position.id'
+              @click="selectedOption = position.id"
             />
             <label :for="positionNameWithoutSpaces(position.name)">{{ position.name }}</label>
           </div>
@@ -120,7 +138,7 @@ const onPhotoSelected = (event) => {
             button-type="submit"
             button-name="Sign up"
             :disabled="submitButtonState"
-            @click.prevent = 'registrationRequest(nameField, emailField, phoneField, selectedOption, uploadedPhoto)'
+            @click.prevent="handleRegistration"
           />
         </div>
       </form>
@@ -129,6 +147,19 @@ const onPhotoSelected = (event) => {
 </template>
 
 <style lang="scss" scoped>
+.reg-successful{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin: 0 0 100px 0;
+  &__text{
+    font-size: 40px;
+    line-height: 40px;
+    color: rgba(0, 0, 0, 0.87);
+  }
+}
 
 .form-heading {
   margin: 0 16px 50px;
@@ -165,13 +196,13 @@ const onPhotoSelected = (event) => {
     border-radius: 4px;
   }
 
-  &__validation-fail-text{
+  &__validation-fail-text {
     position: absolute;
     top: 55px;
     left: 18px;
     font-size: 12px;
     line-height: 14px;
-    color: #CB3D40;
+    color: #cb3d40;
   }
 
   &__phone {
@@ -240,7 +271,7 @@ const onPhotoSelected = (event) => {
     flex: 1 1 auto;
     text-align: left;
   }
-  &__validation-error{
+  &__validation-error {
     color: rgba(203, 61, 64, 1);
     font-size: 12px;
     line-height: 14px;
@@ -249,7 +280,7 @@ const onPhotoSelected = (event) => {
     left: 18px;
   }
 }
-.upload-button{
+.upload-button {
   &__left.error {
     border: 2px solid rgba(203, 61, 64, 1);
     border-right: 0px;
