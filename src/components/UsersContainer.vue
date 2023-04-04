@@ -1,35 +1,38 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
-import { onMounted, reactive, ref } from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import { getUsers } from '@/api'
 
+const users = reactive([])
+const maxUsersOnPage = ref(6);
+const NEW_USERS_QUANTITY = 6;
+const addNewUsersIsPossible = ref(true)
+
 onMounted(() => {
-  getUsers().then(pushToArray)
+  getUsers(100).then((data) => {
+    for (const elem of data) {
+      users.push(elem)
+    }
+  })
+
+  users.sort((a,b) => a.registration_timestamp - b.registration_timestamp)
 })
 
-const USERS_PER_REQUEST = 6
-const users = reactive([])
-const usersAreExist = ref(true)
+const paginatedUsers = computed(() => {
+  return users.slice(0, maxUsersOnPage.value)
+})
 
-const pushToArray = (data) => {
-  for (const elem of data) {
-    users.push(elem)
+const addUsersOnPage = () => {
+  maxUsersOnPage.value += NEW_USERS_QUANTITY;
+  if(users.length <= maxUsersOnPage.value){
+    addNewUsersIsPossible.value = false;
   }
-  users.sort((a, b) => b.registration_timestamp - a.registration_timestamp)
-
-  if (data.length < USERS_PER_REQUEST) {
-    usersAreExist.value = false
-  }
-}
-
-const showMoreUsers = async () => {
-  getUsers().then(pushToArray)
 }
 </script>
 
 <template>
   <div class="users-wrapper__users users">
-    <div class="users__user user" v-for="user in users" :key="user.id">
+    <div class="users__user user" v-for="user in paginatedUsers" :key="user.id">
       <div class="user__wrapper">
         <div class="user__profile-photo">
           <img :src="user.photo" alt="profile-photo" />
@@ -47,10 +50,10 @@ const showMoreUsers = async () => {
   </div>
   <div class="show-more-button">
     <button-component
-      @click="showMoreUsers"
       button-name="Show more"
       button-width="120"
-      v-if="usersAreExist"
+      @click="addUsersOnPage"
+      v-if="addNewUsersIsPossible"
     />
   </div>
 </template>
