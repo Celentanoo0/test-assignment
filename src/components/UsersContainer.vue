@@ -1,9 +1,9 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import PreloaderComponent from '@/components/PreloaderComponent.vue'
+import CustomTooltip from '@/components/CustomTooltip.vue'
 import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { getUsers, uploadUsers } from '@/api'
-import PreloaderComponent from "@/components/PreloaderComponent.vue";
-import CustomTooltip from "@/components/CustomTooltip.vue";
 
 const props = defineProps({
   updateUsers: {
@@ -21,7 +21,6 @@ const users = reactive([])
 const maxUsersOnPage = ref(6)
 const NEW_USERS_QUANTITY = 6
 const addNewUsersIsPossible = ref(true)
-const showEmail = ref(false);
 
 onMounted(() => {
   getUsers(100).then(updateUsersArray)
@@ -56,15 +55,15 @@ const addUsersOnPage = () => {
         return
       }
       updateUsersArray(data)
-      users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
+      users.sort((a, b) => b.registration_timestamp - a.registration_timestamp)
     })
   }
 }
 </script>
 
 <template>
-    <preloader-component v-if="!users.length" class="app-preloader"/>
-  <div class="users-wrapper__users users" >
+  <preloader-component v-if="!users.length" class="app-preloader" />
+  <div class="users-wrapper__users users">
     <div class="users__user user" v-for="user in paginatedUsers" :key="user.id">
       <div class="user__wrapper">
         <div class="user__profile-photo">
@@ -75,8 +74,9 @@ const addUsersOnPage = () => {
         </div>
         <div class="user__description">
           <p>{{ user.position }}</p>
-<!--          <p >{{ user.email }}</p>-->
-            <custom-tooltip>{{user.email}}</custom-tooltip>
+          <p>
+            <custom-tooltip>{{ user.email }}</custom-tooltip>
+          </p>
           <p>{{ user.phone }}</p>
         </div>
       </div>
@@ -93,7 +93,7 @@ const addUsersOnPage = () => {
 </template>
 
 <style lang="scss" scoped>
-.app-preloader{
+.app-preloader {
   margin: 100px 0;
 }
 

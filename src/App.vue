@@ -9,8 +9,9 @@
 // 11. check is api working correct when more than 100 users (sort!) [DONE]
 // 6.wait screen when users aren't loaded [DONE]
 // 1.custom tooltip [DONE]
-// 12. check is api working when there are more than 100 people are registered
+// 12. check is api working when there are more than 100 people are registered [DONE]
 // 9. refactor html,css, and js, if needed
+// final: TEST ALL FUNCTIONALITY TO FIND BUGS
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>
