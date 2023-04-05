@@ -1,20 +1,19 @@
-const allUsers = []
 let apiToken = ''
+let usersPage = 1
+let totalPages = 1
 
 export const getUsers = async (usersAmount) => {
   try {
+    if (usersPage > totalPages) {
+      return false
+    }
     const f = await fetch(
-      `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=${usersAmount}`
+      `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${usersPage}&count=${usersAmount}`
     )
     const data = await f.json()
-    const users = data.users
-
-    allUsers.length = 0
-    for (const elem of users) {
-      allUsers.push(elem)
-    }
-
-    return allUsers
+    totalPages = data.total_pages
+    usersPage += 1
+    return data.users
   } catch (error) {
     console.error(error)
   }
@@ -59,8 +58,7 @@ export const registrationRequest = async (name, email, phone, position_id, photo
       body: formData
     })
 
-    const data = response.json()
-    return data
+    return response.json()
   } catch (error) {
     console.error(error)
   }

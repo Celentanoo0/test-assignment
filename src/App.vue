@@ -4,12 +4,13 @@
 // 3.error in text input when incorrect data [DONE]
 // 4.fix input radio [DONE]
 // 5.problems with text wrap [DONE]
+// 7.fix api getUsers, it doesnt work correctly (can display only last 100 users) [DONE]
 // 1.email when hover to it
 // 6.wait screen when users aren't loaded
-// 7.fix api getUsers, it doesnt work correctly (can display only last 100 users)
 // 8. implement User with this phone or email already exist validation
 // 9. refactor html,css, and js, if needed
 // 10. pixel-perfect????
+// 11. check is api working correct when more than 100 users (sort!)
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>

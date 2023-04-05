@@ -22,7 +22,6 @@ const addNewUsersIsPossible = ref(true)
 
 onMounted(() => {
   getUsers(100).then(updateUsersArray)
-  // users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
 })
 
 watch(updateUsers, () => {
@@ -48,7 +47,14 @@ const paginatedUsers = computed(() => {
 const addUsersOnPage = () => {
   maxUsersOnPage.value += NEW_USERS_QUANTITY
   if (users.length <= maxUsersOnPage.value) {
-    addNewUsersIsPossible.value = false
+    getUsers(100).then((data) => {
+      if (!data) {
+        addNewUsersIsPossible.value = false
+        return
+      }
+      updateUsersArray(data)
+      users.sort((a, b) => a.registration_timestamp - b.registration_timestamp)
+    })
   }
 }
 </script>
