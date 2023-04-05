@@ -33,6 +33,8 @@ const fieldsToValidate = reactive({
   }
 })
 
+const PHONE_EMAIL_VALIDATION_ERROR = 'User with this phone or email already exist'
+
 const handleRegistration = async () => {
   const response = await registrationRequest(
     nameField.value,
@@ -50,6 +52,16 @@ const handleRegistration = async () => {
     }
     emit('registration-successful')
     return
+  }
+
+  if(response.message === PHONE_EMAIL_VALIDATION_ERROR){
+      const errorFields = ['email', 'phone'];
+      for(const elem of errorFields){
+          fieldsToValidate[elem].validationError = true;
+          fieldsToValidate[elem].errorText = PHONE_EMAIL_VALIDATION_ERROR;
+      }
+      phoneField.value = '';
+      emailField.value = '';
   }
 
   for (const [keyName, value] of Object.entries(fieldsToValidate)) {
