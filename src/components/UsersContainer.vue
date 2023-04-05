@@ -2,6 +2,7 @@
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { getUsers, uploadUsers } from '@/api'
+import PreloaderComponent from "@/components/PreloaderComponent.vue";
 
 const props = defineProps({
   updateUsers: {
@@ -60,7 +61,8 @@ const addUsersOnPage = () => {
 </script>
 
 <template>
-  <div class="users-wrapper__users users">
+    <preloader-component v-if="!users.length" class="app-preloader"/>
+  <div class="users-wrapper__users users" >
     <div class="users__user user" v-for="user in paginatedUsers" :key="user.id">
       <div class="user__wrapper">
         <div class="user__profile-photo">
@@ -88,6 +90,10 @@ const addUsersOnPage = () => {
 </template>
 
 <style lang="scss" scoped>
+.app-preloader{
+  margin: 100px 0;
+}
+
 .show-more-button {
   margin: 50px 0 140px;
 }

@@ -2,6 +2,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { getPositions, registrationRequest } from '@/api'
 import ButtonComponent from '@/components/ButtonComponent.vue'
+import PreloaderComponent from '@/components/PreloaderComponent.vue'
 
 const emit = defineEmits({
   'registration-successful': null
@@ -54,14 +55,14 @@ const handleRegistration = async () => {
     return
   }
 
-  if(response.message === PHONE_EMAIL_VALIDATION_ERROR){
-      const errorFields = ['email', 'phone'];
-      for(const elem of errorFields){
-          fieldsToValidate[elem].validationError = true;
-          fieldsToValidate[elem].errorText = PHONE_EMAIL_VALIDATION_ERROR;
-      }
-      phoneField.value = '';
-      emailField.value = '';
+  if (response.message === PHONE_EMAIL_VALIDATION_ERROR) {
+    const errorFields = ['email', 'phone']
+    for (const elem of errorFields) {
+      fieldsToValidate[elem].validationError = true
+      fieldsToValidate[elem].errorText = PHONE_EMAIL_VALIDATION_ERROR
+    }
+    phoneField.value = ''
+    emailField.value = ''
   }
 
   for (const [keyName, value] of Object.entries(fieldsToValidate)) {
@@ -159,22 +160,24 @@ const onPhotoSelected = (event) => {
             {{ fieldsToValidate.phone.errorText }}
           </p>
         </div>
-
         <div class="form__position form__item">
           <div class="form__position-description">Select your position:</div>
-          <div
-            class="form__position-item radio-container"
-            v-for="position in positions"
-            :key="position.id"
-          >
-            <input
-              type="radio"
-              :id="positionNameWithoutSpaces(position.name)"
-              name="position"
-              @click="selectedOption = position.id"
-            />
-            <label :for="positionNameWithoutSpaces(position.name)">{{ position.name }}</label>
-          </div>
+          <preloader-component v-if="!positions.length" class="app-preloader" />
+          <template v-if="positions.length">
+            <div
+              class="form__position-item radio-container"
+              v-for="position in positions"
+              :key="position.id"
+            >
+              <input
+                type="radio"
+                :id="positionNameWithoutSpaces(position.name)"
+                name="position"
+                @click="selectedOption = position.id"
+              />
+              <label :for="positionNameWithoutSpaces(position.name)">{{ position.name }}</label>
+            </div>
+          </template>
         </div>
 
         <div class="form__image form__item">
@@ -215,6 +218,11 @@ const onPhotoSelected = (event) => {
 </template>
 
 <style lang="scss" scoped>
+.app-preloader {
+  width: 50px;
+  height: 50px;
+  margin: 30px 0;
+}
 .reg-successful {
   display: flex;
   flex-direction: column;
@@ -294,6 +302,7 @@ const onPhotoSelected = (event) => {
   &__position-description {
     margin: 0 0 11px 0;
   }
+
   &__position-item label {
     margin: 0 0 0 12px;
   }
