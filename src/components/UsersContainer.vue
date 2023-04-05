@@ -3,6 +3,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import { getUsers, uploadUsers } from '@/api'
 import PreloaderComponent from "@/components/PreloaderComponent.vue";
+import CustomTooltip from "@/components/CustomTooltip.vue";
 
 const props = defineProps({
   updateUsers: {
@@ -20,6 +21,7 @@ const users = reactive([])
 const maxUsersOnPage = ref(6)
 const NEW_USERS_QUANTITY = 6
 const addNewUsersIsPossible = ref(true)
+const showEmail = ref(false);
 
 onMounted(() => {
   getUsers(100).then(updateUsersArray)
@@ -73,7 +75,8 @@ const addUsersOnPage = () => {
         </div>
         <div class="user__description">
           <p>{{ user.position }}</p>
-          <p>{{ user.email }}</p>
+<!--          <p >{{ user.email }}</p>-->
+            <custom-tooltip>{{user.email}}</custom-tooltip>
           <p>{{ user.phone }}</p>
         </div>
       </div>
