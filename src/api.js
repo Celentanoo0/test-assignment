@@ -1,18 +1,27 @@
 let apiToken = ''
-let usersPage = 1
-let totalPages = 1
+let nextUrl = ''
 
 export const getUsers = async (usersAmount) => {
   try {
-    if (usersPage > totalPages) {
-      return false
-    }
     const f = await fetch(
-      `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=${usersPage}&count=${usersAmount}`
+      `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=${usersAmount}`
     )
     const data = await f.json()
-    totalPages = data.total_pages
-    usersPage += 1
+    nextUrl = data.links.next_url ? data.links.next_url : ''
+    return data.users
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+export const uploadUsers = async () => {
+  try {
+    if (!nextUrl) {
+      return false
+    }
+    const f = await fetch(nextUrl)
+    const data = await f.json()
+    nextUrl = data.links.next_url ? data.links.next_url : ''
     return data.users
   } catch (error) {
     console.error(error)

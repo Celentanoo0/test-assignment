@@ -1,7 +1,7 @@
 <script setup>
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import { computed, onMounted, reactive, ref, toRefs, watch } from 'vue'
-import { getUsers } from '@/api'
+import { getUsers, uploadUsers } from '@/api'
 
 const props = defineProps({
   updateUsers: {
@@ -47,7 +47,7 @@ const paginatedUsers = computed(() => {
 const addUsersOnPage = () => {
   maxUsersOnPage.value += NEW_USERS_QUANTITY
   if (users.length <= maxUsersOnPage.value) {
-    getUsers(100).then((data) => {
+    uploadUsers().then((data) => {
       if (!data) {
         addNewUsersIsPossible.value = false
         return
