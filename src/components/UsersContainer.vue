@@ -109,7 +109,7 @@ const addUsersOnPage = () => {
   flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  &_margin{
+  &_margin {
     margin: 0 16px;
   }
 }
@@ -159,7 +159,7 @@ const addUsersOnPage = () => {
 @media (min-width: 767px) {
   .users {
     gap: 16px;
-    &_margin{
+    &_margin {
       margin: 0 32px;
     }
   }
@@ -169,7 +169,7 @@ const addUsersOnPage = () => {
 @media (min-width: 1024px) {
   .users {
     gap: 29px;
-    &_margin{
+    &_margin {
       margin: 0 60px;
     }
   }
@@ -177,6 +177,7 @@ const addUsersOnPage = () => {
   .user {
     flex: 1 1 calc(33.333% - 29px);
 
+    &__name p,
     &__description p {
       text-overflow: ellipsis;
       white-space: nowrap;
