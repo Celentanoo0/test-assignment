@@ -14,7 +14,7 @@ const props = defineProps({
   buttonType: {
     required: false,
     type: String,
-    default: 'button',
+    default: 'button'
   }
 })
 
@@ -22,11 +22,16 @@ const { buttonType, buttonName, buttonWidth } = toRefs(props)
 </script>
 
 <template>
-  <input :type="buttonType" :value="buttonName" class="button" :style="{ width: buttonWidth + 'px' }">
+  <input
+    :type="buttonType"
+    :value="buttonName"
+    class="app-button"
+    :style="{ width: buttonWidth + 'px' }"
+  />
 </template>
 
 <style lang="scss" scoped>
-.button {
+.app-button {
   cursor: pointer;
   line-height: 26px;
   background: #f4e041;
@@ -39,10 +44,10 @@ const { buttonType, buttonName, buttonWidth } = toRefs(props)
   transition: all 0.2s;
   border: 0;
 }
-.button:hover {
+.app-button:hover {
   background: #ffe304;
 }
-.button:disabled {
+.app-button:disabled {
   background: #b4b4b4;
   color: white;
 }

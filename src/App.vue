@@ -1,17 +1,4 @@
 <script setup>
-//todo:
-// 2.error in upload input when file isn't a photo [DONE]
-// 3.error in text input when incorrect data [DONE]
-// 4.fix input radio [DONE]
-// 5.problems with text wrap [DONE]
-// 7.fix api getUsers, it doesnt work correctly (can display only last 100 users) [DONE]
-// 8. implement User with this phone or email already exist validation [DONE]
-// 11. check is api working correct when more than 100 users (sort!) [DONE]
-// 6.wait screen when users aren't loaded [DONE]
-// 1.custom tooltip [DONE]
-// 12. check is api working when there are more than 100 people are registered [DONE]
-// 9. refactor html,css, and js, if needed
-// final: TEST ALL FUNCTIONALITY TO FIND BUGS
 import HeaderSection from '@/components/HeaderSection.vue'
 import MainSection from '@/components/MainSection.vue'
 </script>
@@ -26,10 +13,12 @@ import MainSection from '@/components/MainSection.vue'
 </template>
 
 <style lang="scss" scoped>
+//page bg-color
 .wrapper {
   background: #f8f8f8;
 }
 
+//set max width of content on the page due to the markup. Content alignment
 .size-controller {
   max-width: 1170px;
   margin: 0 auto;

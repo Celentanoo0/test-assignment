@@ -1,8 +1,8 @@
 <script setup>
-import { computed, onMounted, reactive, ref } from 'vue'
-import { getPositions, registrationRequest } from '@/api'
 import ButtonComponent from '@/components/ButtonComponent.vue'
 import PreloaderComponent from '@/components/PreloaderComponent.vue'
+import { computed, onMounted, reactive, ref } from 'vue'
+import { getPositions, registrationRequest } from '@/api'
 
 const emit = defineEmits({
   'registration-successful': null
@@ -34,44 +34,7 @@ const fieldsToValidate = reactive({
   }
 })
 
-const PHONE_EMAIL_VALIDATION_ERROR = 'User with this phone or email already exist'
-
-const handleRegistration = async () => {
-  const response = await registrationRequest(
-    nameField.value,
-    emailField.value,
-    phoneField.value,
-    selectedOption.value,
-    uploadedPhoto.value
-  )
-
-  if (response.success) {
-    registrationSuccessful.value = true
-    for (const [keyName, value] of Object.entries(fieldsToValidate)) {
-      fieldsToValidate[keyName].validationError = false
-      fieldsToValidate[keyName].errorText = ''
-    }
-    emit('registration-successful')
-    return
-  }
-
-  if (response.message === PHONE_EMAIL_VALIDATION_ERROR) {
-    const errorFields = ['email', 'phone']
-    for (const elem of errorFields) {
-      fieldsToValidate[elem].validationError = true
-      fieldsToValidate[elem].errorText = PHONE_EMAIL_VALIDATION_ERROR
-    }
-    phoneField.value = ''
-    emailField.value = ''
-  }
-
-  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
-    if (response.fails && Object.prototype.hasOwnProperty.call(response.fails, keyName)) {
-      fieldsToValidate[keyName].validationError = true
-      fieldsToValidate[keyName].errorText = response.fails[keyName][0]
-    }
-  }
-}
+const USER_IS_ALREADY_EXIST_ERROR_TEXT = 'User with this phone or email already exist'
 
 onMounted(() => {
   getPositions().then((data) => {
@@ -91,23 +54,69 @@ const submitButtonState = computed(() => {
   )
 })
 
-const positionNameWithoutSpaces = (posName) => {
-  return posName.split(' ').join('_')
-}
-
 const uploadedPhotoName = computed(() => {
   return uploadedPhoto.value ? uploadedPhoto.value.name : 'Upload your photo'
 })
 
+const handleRegistration = async () => {
+  const response = await registrationRequest(
+    nameField.value,
+    emailField.value,
+    phoneField.value,
+    selectedOption.value,
+    uploadedPhoto.value
+  )
+
+  if (response.success) {
+    registrationSuccess()
+    return
+  }
+
+  registrationFailed(response)
+}
+
+const registrationSuccess = () => {
+  registrationSuccessful.value = true
+  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
+    fieldsToValidate[keyName].validationError = false
+    fieldsToValidate[keyName].errorText = ''
+  }
+  emit('registration-successful')
+}
+
+const registrationFailed = (responseError) => {
+  if (responseError.message === USER_IS_ALREADY_EXIST_ERROR_TEXT) {
+    const errorFields = ['email', 'phone']
+    for (const elem of errorFields) {
+      fieldsToValidate[elem].validationError = true
+      fieldsToValidate[elem].errorText = USER_IS_ALREADY_EXIST_ERROR_TEXT
+    }
+    phoneField.value = ''
+    emailField.value = ''
+    return
+  }
+
+  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
+    if (responseError.fails && Object.prototype.hasOwnProperty.call(responseError.fails, keyName)) {
+      fieldsToValidate[keyName].validationError = true
+      fieldsToValidate[keyName].errorText = responseError.fails[keyName][0]
+    }
+  }
+}
+
+const positionNameWithoutSpaces = (posName) => {
+  return posName.split(' ').join('_')
+}
+
 const onPhotoSelected = (event) => {
-  if (event && event.target && event.target.files && event.target.files[0]) {
+  if (event?.target?.files[0]) {
     uploadedPhoto.value = event.target.files[0]
   }
 }
 </script>
 
 <template>
-  <div class="form-wrapper__reg-successful reg-successful" v-if="registrationSuccessful">
+  <div class="form-wrapper__reg-successful reg-successful reg-successful_margin" v-if="registrationSuccessful">
     <div class="reg-successful__text">
       <h1>User successfully registered</h1>
     </div>
@@ -116,10 +125,10 @@ const onPhotoSelected = (event) => {
     </div>
   </div>
   <section class="form-wrapper" v-if="!registrationSuccessful">
-    <div class="form-wrapper__form-heading form-heading">
+    <div class="form-wrapper__form-heading form-heading form-heading_margin">
       <h1>Working with POST request</h1>
     </div>
-    <div class="form-wrapper__form form">
+    <div class="form-wrapper__form form form_margin">
       <form action="#" method="post" enctype="multipart/form-data">
         <div
           class="form__name form__item"
@@ -218,18 +227,23 @@ const onPhotoSelected = (event) => {
 </template>
 
 <style lang="scss" scoped>
+//styles for preloader component
 .app-preloader {
   width: 50px;
   height: 50px;
   margin: 30px 0;
 }
+
+//styles for successful registration block
 .reg-successful {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 50px;
-  margin: 0 0 100px 0;
+  &_margin{
+    margin: 0 0 100px 0;
+  }
   &__text {
     font-size: 40px;
     line-height: 40px;
@@ -239,16 +253,23 @@ const onPhotoSelected = (event) => {
 }
 
 .form-heading {
-  margin: 0 16px 50px;
   color: rgba(0, 0, 0, 0.87);
   font-size: 40px;
   line-height: 40px;
   text-align: center;
+  &_margin{
+    margin: 0 16px 50px;
+  }
 }
+
+//styles for form block
 .form {
   padding: 0 16px;
   max-width: 380px;
-  margin: 0 auto;
+
+  &_margin{
+    margin: 0 auto;
+  }
 
   &__name,
   &__email,
@@ -330,6 +351,7 @@ const onPhotoSelected = (event) => {
   }
 }
 
+//styles for photo upload button
 .upload-button {
   font-size: 16px;
   line-height: 26px;
@@ -358,6 +380,7 @@ const onPhotoSelected = (event) => {
     left: 18px;
   }
 }
+//styles for this upload photo button when format isn't right
 .upload-button {
   &__left.error {
     border: 2px solid rgba(203, 61, 64, 1);
@@ -368,6 +391,7 @@ const onPhotoSelected = (event) => {
   }
 }
 
+//custom check fields for radio buttons
 .radio-container input[type='radio'] {
   display: none;
 }

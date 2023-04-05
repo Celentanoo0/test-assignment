@@ -18,6 +18,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 </template>
 
 <style lang="scss" scoped>
+//setting photo as a bg and adding styles to it
 .component {
   height: 500px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -26,6 +27,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
   position: relative;
 }
 
+//description block styling
 .description {
   height: 100%;
   max-width: 380px;
@@ -52,8 +54,9 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
   margin: 0 0 32px 0;
 }
 
+//styles for normal screens
 @media (min-width: 1024px) {
-  .component{
+  .component {
     height: 650px;
   }
 }
