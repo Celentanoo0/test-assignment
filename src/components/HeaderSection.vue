@@ -6,7 +6,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
   <header class="header">
     <div class="size-controller">
       <div class="header__logo logo logo_margin">
-        <img src="src/assets/Logo.svg" alt="Logo" />
+        <img src="../assets/logoImage.svg" alt="Logo" />
       </div>
       <div class="header__buttons buttons buttons_margin">
         <nav>
