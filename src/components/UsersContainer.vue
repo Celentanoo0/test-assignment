@@ -72,7 +72,7 @@ const addUsersOnPage = () => {
         <div class="user__name">
           <p>{{ user.name }}</p>
         </div>
-        <div class="user__description">
+        <div class="user__description user__description_margin">
           <p>{{ user.position }}</p>
           <p>
             <custom-tooltip>{{ user.email }}</custom-tooltip>
@@ -145,6 +145,9 @@ const addUsersOnPage = () => {
     width: 250px;
   }
 
+  &__description_margin {
+    margin: 7px 0 0 0;
+  }
   &__description p {
     font-size: 16px;
     line-height: 26px;

@@ -116,7 +116,10 @@ const onPhotoSelected = (event) => {
 </script>
 
 <template>
-  <div class="form-wrapper__reg-successful reg-successful reg-successful_margin" v-if="registrationSuccessful">
+  <div
+    class="form-wrapper__reg-successful reg-successful reg-successful_margin"
+    v-if="registrationSuccessful"
+  >
     <div class="reg-successful__text">
       <h1>User successfully registered</h1>
     </div>
@@ -170,7 +173,7 @@ const onPhotoSelected = (event) => {
           </p>
         </div>
         <div class="form__position form__item">
-          <div class="form__position-description">Select your position:</div>
+          <div class="form__position-description">Select your position</div>
           <preloader-component v-if="!positions.length" class="app-preloader" />
           <template v-if="positions.length">
             <div
@@ -241,7 +244,7 @@ const onPhotoSelected = (event) => {
   align-items: center;
   justify-content: center;
   gap: 50px;
-  &_margin{
+  &_margin {
     margin: 0 0 100px 0;
   }
   &__text {
@@ -257,7 +260,7 @@ const onPhotoSelected = (event) => {
   font-size: 40px;
   line-height: 40px;
   text-align: center;
-  &_margin{
+  &_margin {
     margin: 0 16px 50px;
   }
 }
@@ -267,7 +270,7 @@ const onPhotoSelected = (event) => {
   padding: 0 16px;
   max-width: 380px;
 
-  &_margin{
+  &_margin {
     margin: 0 auto;
   }
 
@@ -285,6 +288,8 @@ const onPhotoSelected = (event) => {
     border-radius: 4px;
     color: #7e7e7e;
     background: #f8f8f8;
+    font-size: 16px;
+    line-height: 25px;
   }
 
   &__name.validation-fail,
@@ -311,7 +316,7 @@ const onPhotoSelected = (event) => {
     font-size: 12px;
     line-height: 14px;
     color: #7e7e7e;
-    top: 54px;
+    top: 60px;
     left: 15px;
   }
 
@@ -398,7 +403,11 @@ const onPhotoSelected = (event) => {
 .radio-container {
   display: flex;
   align-items: center;
+  & label {
+    margin: 0;
+  }
 }
+
 .radio-container input[type='radio'] + label:before {
   content: '';
   display: inline-block;

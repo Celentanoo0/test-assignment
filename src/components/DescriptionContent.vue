@@ -4,7 +4,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 
 <template>
   <div class="component">
-    <section class="description">
+    <section class="description description_margin">
       <h1>Test assignment for front-end developer</h1>
       <p>
         What defines a good front-end developer is one that has skilled knowledge of HTML, CSS, JS
@@ -31,13 +31,14 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 .description {
   height: 100%;
   max-width: 380px;
-  margin: 0 auto;
   padding: 0 16px;
   color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  &_margin {
+    margin: 40px auto;
+  }
 }
 .description h1 {
   padding: 0;
@@ -54,8 +55,17 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
   margin: 0 0 32px 0;
 }
 
+@media (min-width: 768px) {
+  .description_margin {
+    margin: 89px auto;
+  }
+}
+
 //styles for normal screens
 @media (min-width: 1024px) {
+  .description_margin {
+    margin: 164px auto;
+  }
   .component {
     height: 650px;
   }
