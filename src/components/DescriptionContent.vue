@@ -22,7 +22,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 .component {
   height: 500px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('src/assets/pexels-alexandr-podvalny-1227513.jpeg') center;
+    url('../assets/descriptionBG.jpeg') center;
   background-size: cover;
   position: relative;
 }

@@ -2,7 +2,7 @@
 
 <template>
   <div class="app-preloader">
-    <img src="src/assets/Preloader.svg" alt="preloader" />
+    <img src="../assets/preloaderImage.svg" alt="preloader" />
   </div>
 </template>
 
