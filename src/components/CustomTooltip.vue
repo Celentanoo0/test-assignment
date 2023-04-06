@@ -24,14 +24,14 @@ const handleMouseleave = () => {
 </script>
 
 <template>
-  <div @mouseover="handleMouseover" @mouseleave="handleMouseleave">
+  <div @mouseover="handleMouseover" @mouseleave="handleMouseleave" class="app-tooltip">
     <slot></slot>
-    <div v-if="showTooltip" class="app-tooltip">{{ tooltipText }}</div>
+    <div v-if="showTooltip" class="app-tooltip__tooltip-text">{{ tooltipText }}</div>
   </div>
 </template>
 
 <style>
-.app-tooltip {
+.app-tooltip__tooltip-text {
   position: absolute;
   background: rgba(0, 0, 0, 0.87);
   color: white;

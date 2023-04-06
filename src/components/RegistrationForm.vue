@@ -77,14 +77,12 @@ const handleRegistration = async () => {
 
 const registrationSuccess = () => {
   registrationSuccessful.value = true
-  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
-    fieldsToValidate[keyName].validationError = false
-    fieldsToValidate[keyName].errorText = ''
-  }
+  resetAllValidationErrors()
   emit('registration-successful')
 }
 
 const registrationFailed = (responseError) => {
+  resetAllValidationErrors()
   if (responseError.message === USER_IS_ALREADY_EXIST_ERROR_TEXT) {
     const errorFields = ['email', 'phone']
     for (const elem of errorFields) {
@@ -101,6 +99,13 @@ const registrationFailed = (responseError) => {
       fieldsToValidate[keyName].validationError = true
       fieldsToValidate[keyName].errorText = responseError.fails[keyName][0]
     }
+  }
+}
+
+const resetAllValidationErrors = () => {
+  for (const [keyName, value] of Object.entries(fieldsToValidate)) {
+    fieldsToValidate[keyName].validationError = false
+    fieldsToValidate[keyName].errorText = ''
   }
 }
 

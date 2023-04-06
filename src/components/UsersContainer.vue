@@ -75,7 +75,9 @@ const addUsersOnPage = () => {
         <div class="user__description user__description_margin">
           <p>{{ user.position }}</p>
           <p>
-            <custom-tooltip>{{ user.email }}</custom-tooltip>
+            <custom-tooltip
+              ><p>{{ user.email }}</p></custom-tooltip
+            >
           </p>
           <p>{{ user.phone }}</p>
         </div>
@@ -138,7 +140,8 @@ const addUsersOnPage = () => {
     }
   }
 
-  &__name p {
+  &__name p,
+  &__description p {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -151,10 +154,6 @@ const addUsersOnPage = () => {
   &__description p {
     font-size: 16px;
     line-height: 26px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 250px;
   }
 }
 

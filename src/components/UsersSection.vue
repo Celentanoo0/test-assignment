@@ -36,7 +36,7 @@ const emit = defineEmits({
   font-size: 40px;
   line-height: 40px;
   color: rgba(0, 0, 0, 0.87);
-  &_margin{
+  &_margin {
     margin: 140px 16px 50px;
   }
 }

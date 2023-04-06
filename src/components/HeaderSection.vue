@@ -44,7 +44,7 @@ import ButtonComponent from '@/components/ButtonComponent.vue'
 
 //buttons block styles
 .buttons {
-  &_margin{
+  &_margin {
     margin: 0 16px 0 0;
   }
   &__button:last-child {
