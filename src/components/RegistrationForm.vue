@@ -129,7 +129,7 @@ const onPhotoSelected = (event) => {
       <h1>User successfully registered</h1>
     </div>
     <div class="reg-successful__image">
-      <img src="src/assets/success-image.svg" alt="reg" />
+      <img src="../assets/registrationSuccess.svg" alt="reg" />
     </div>
   </div>
   <section class="form-wrapper" v-if="!registrationSuccessful">
