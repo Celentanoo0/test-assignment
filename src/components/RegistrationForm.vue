@@ -282,7 +282,7 @@ const onPhotoSelected = (event) => {
   &__name input,
   &__email input,
   &__phone input {
-    padding: 14px 0 14px 16px;
+    padding: 14px 16px;
     flex: 1 1 auto;
     border: 1px solid #d0cfcf;
     border-radius: 4px;
@@ -301,7 +301,7 @@ const onPhotoSelected = (event) => {
 
   &__validation-fail-text {
     position: absolute;
-    top: 55px;
+    top: 62px;
     left: 18px;
     font-size: 12px;
     line-height: 14px;

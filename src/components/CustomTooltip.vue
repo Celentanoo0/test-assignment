@@ -3,15 +3,21 @@ import { ref } from 'vue'
 
 const showTooltip = ref(false)
 const tooltipText = ref('')
+let timeoutId = null
 
 const handleMouseover = (event) => {
-  if (tooltipText.value === '') {
-    tooltipText.value = event.target.innerText
-    showTooltip.value = true
-  }
+  timeoutId = setTimeout(() => {
+    if (tooltipText.value === '') {
+      tooltipText.value = event.target.innerText
+      showTooltip.value = true
+    }
+  }, 500)
 }
 
 const handleMouseleave = () => {
+  if (timeoutId) {
+    clearTimeout(timeoutId)
+  }
   showTooltip.value = false
   tooltipText.value = ''
 }
